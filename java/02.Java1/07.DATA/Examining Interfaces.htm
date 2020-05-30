@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0070)http://java.sun.com/docs/books/tutorial/reflect/class/isInterface.html -->
+<HTML><HEAD><TITLE>Examining Interfaces</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/class/getInterfaces.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Examining Interfaces_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#class" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Examining Interfaces_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/class/getFields.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Examining Interfaces_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/class/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Examining Interfaces_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Examining Classes </FONT>
+<H2>Examining Interfaces </H2>
+<BLOCKQUOTE><CODE>Class</CODE> objects represent interfaces as well as 
+  classes. If you aren't sure whether a <CODE>Class</CODE> object represents an 
+  interface or a class, call the <CODE>isInterface</CODE> method. 
+  <P>You invoke <CODE>Class</CODE> methods to get information about an 
+  interface. To find the public constants of an interface, invoke the 
+  <CODE>getFields</CODE> method upon the <CODE>Class</CODE> object that 
+  represents the interface. The section <A 
+  href="http://java.sun.com/docs/books/tutorial/reflect/class/getFields.html">Identifying 
+  Class Fields</A> has an example containing <CODE>getFields</CODE>. You can use 
+  <CODE>getMethods</CODE> to get information about an interface's methods. See 
+  the section <A 
+  href="http://java.sun.com/docs/books/tutorial/reflect/class/getMethods.html">Obtaining 
+  Method Information</A>. To find out about an interface's modifiers, invoke the 
+  <CODE>getModifiers</CODE> method. See the section <A 
+  href="http://java.sun.com/docs/books/tutorial/reflect/class/getModifiers.html">Discovering 
+  Class Modifiers</A> for an example. 
+  <P>By calling <CODE>isInterface</CODE>, the following program reveals that 
+  <CODE>Observer</CODE> is an interface and that <CODE>Observable</CODE> is a 
+  class: 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+import java.util.*;
+
+class SampleCheckInterface {
+
+   public static void main(String[] args) {
+      Class observer = Observer.class;
+      Class observable = Observable.class;
+      verifyInterface(observer);
+      verifyInterface(observable);
+   }
+
+   static void verifyInterface(Class c) {
+      String name = c.getName();
+      if (c.isInterface()) {
+         System.out.println(name + " is an interface.");
+      } else {
+         System.out.println(name + " is a class.");
+      }
+   }
+}
+</PRE></BLOCKQUOTE>The output of the preceding program is: 
+  <BLOCKQUOTE><PRE>java.util.Observer is an interface.
+java.util.Observable is a class.
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Examining Interfaces_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/class/getInterfaces.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Examining Interfaces_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#class" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Examining Interfaces_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/class/getFields.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Examining Interfaces_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/class/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

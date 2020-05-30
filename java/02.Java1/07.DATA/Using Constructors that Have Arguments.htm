@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0063)http://java.sun.com/docs/books/tutorial/reflect/object/arg.html -->
+<HTML><HEAD><TITLE>Using Constructors that Have Arguments</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/noarg.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Using Constructors that Have Arguments_files/PreviousArrow.gif" 
+      width=26 align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Using Constructors that Have Arguments_files/TOCIcon.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/get.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Using Constructors that Have Arguments_files/NextArrow.gif" width=26 
+      align=center border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Using Constructors that Have Arguments_files/blueline.gif" width=550 
+align=bottom NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection 
+API <BR><B>Lesson</B>: Manipulating Objects </FONT>
+<H2>Using Constructors that Have Arguments </H2>
+<BLOCKQUOTE>To create an object with a constructor that has arguments, you 
+  invoke the <CODE>newInstance</CODE> method on a <A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Constructor.html" 
+  target=apidoc><FONT color=#8800bb><CODE>Constructor</CODE> </FONT></A><A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Constructor.html" 
+  target=apidoc><IMG height=11 alt="(in the API reference documentation)" 
+  src="Using Constructors that Have Arguments_files/apiIcon.gif" width=11 
+  align=absMiddle border=0></A>object, not a <CODE>Class</CODE> object. This 
+  technique involves several steps: 
+  <OL>
+    <LI>Create a <CODE>Class</CODE> object for the object you want to create. 
+    <LI>Create a <CODE>Constructor</CODE> object by invoking 
+    <CODE>getConstructor</CODE> on the <CODE>Class</CODE> object. The 
+    <CODE>getConstructor</CODE> method has one parameter: an array of 
+    <CODE>Class</CODE> objects that correspond to the constructor's parameters. 
+    <LI>Create the object by invoking <CODE>newInstance</CODE> on the 
+    <CODE>Constructor</CODE> object. The <CODE>newInstance</CODE> method has one 
+    parameter: an <CODE>Object</CODE> array whose elements are the argument 
+    values being passed to the constructor. </LI></OL>
+  <P>The sample program that follows creates a <CODE>Rectangle</CODE> with the 
+  constructor that accepts two integers as parameters. Invoking 
+  <CODE>newInstance</CODE> on this constructor is analogous to this statement: 
+  <BLOCKQUOTE><PRE>Rectangle rectangle = new Rectangle(12, 34);
+</PRE></BLOCKQUOTE>This constructor's arguments are primitive types, but the 
+  argument values passed to <CODE>newInstance</CODE> must be objects. Therefore, 
+  each of the primitive <CODE>int</CODE> types is wrapped in an 
+  <CODE>Integer</CODE> object. 
+  <P>The sample program hardcodes the argument passed to the 
+  <CODE>getConstructor</CODE> method. In a real-life application such as a 
+  debugger, you would probably let the user select the constructor. To verify 
+  the user's selection, you could use the methods described in the section <A 
+  href="http://java.sun.com/docs/books/tutorial/reflect/class/getConstructors.html">Discovering 
+  Class Constructors</A>. 
+  <P>The source code for the sample program follows: 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+import java.awt.*;
+
+class SampleInstance {
+
+   public static void main(String[] args) {
+
+      Rectangle rectangle;
+      Class rectangleDefinition;
+      Class[] intArgsClass = new Class[] {int.class, int.class};
+      Integer height = new Integer(12);
+      Integer width = new Integer(34);
+      Object[] intArgs = new Object[] {height, width};
+      Constructor intArgsConstructor;
+
+      try {
+        rectangleDefinition = Class.forName("java.awt.Rectangle");
+        intArgsConstructor = 
+            rectangleDefinition.getConstructor(intArgsClass);
+        rectangle = 
+            (Rectangle) createObject(intArgsConstructor, intArgs);
+      } catch (ClassNotFoundException e) {
+          System.out.println(e);
+      } catch (NoSuchMethodException e) {
+          System.out.println(e);
+      }
+   }
+
+   public static Object createObject(Constructor constructor, 
+                                     Object[] arguments) {
+
+      System.out.println ("Constructor: " + constructor.toString());
+      Object object = null;
+
+      try {
+        object = constructor.newInstance(arguments);
+        System.out.println ("Object: " + object.toString());
+        return object;
+      } catch (InstantiationException e) {
+          System.out.println(e);
+      } catch (IllegalAccessException e) {
+          System.out.println(e);
+      } catch (IllegalArgumentException e) {
+          System.out.println(e);
+      } catch (InvocationTargetException e) {
+          System.out.println(e);
+      }
+      return object;
+   }
+}
+</PRE></BLOCKQUOTE>The sample program prints a description of the constructor 
+  and the object that it creates: 
+  <BLOCKQUOTE><PRE>Constructor: public java.awt.Rectangle(int,int)
+Object: java.awt.Rectangle[x=0,y=0,width=12,height=34]
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Using Constructors that Have Arguments_files/blueline.gif" width=550 
+align=bottom NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/noarg.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Using Constructors that Have Arguments_files/PreviousArrow.gif" 
+      width=26 align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Using Constructors that Have Arguments_files/TOCIcon.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/get.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Using Constructors that Have Arguments_files/NextArrow.gif" width=26 
+      align=center border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

@@ -1,0 +1,971 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0083)http://developer.java.sun.com/developer/technicalArticles/ALT/Reflection/index.html -->
+<HTML><HEAD><TITLE>Using Java Reflection</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<META content="Glen McCluskey" name=AUTHOR>
+<META 
+content="Learn how JDK 1.1 Reflection enables dynamic retrieval of classes and data structures by name." 
+name=DESCRIPTION>
+<META content=01/15/98 name=CREATED>
+<META 
+content="article, learn, advanced language topics, reflection, JavaBeans, Java Development Kit" 
+name=KEYWORDS>
+<META content=Editorial/JDC name=OWNER>
+<META content="@(#)index.src&#9;1.9 06/04/99  JDC" name=revision>
+<META content="article, advanced language topics, reflection" name=TOPIC><!-- Start Body Insert-->
+<STYLE type=text/css>CODE {
+	FONT-SIZE: 12pt; FONT-FAMILY: Courier, Monospace
+}
+PRE {
+	FONT-SIZE: 11pt; FONT-FAMILY: Courier, Monospace
+}
+BODY {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+DIV {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+SPAN {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+TD {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+TH {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+TR {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+TABLE {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+P {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+LI {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+BR {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+SUP {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H1 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H2 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H3 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H4 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H5 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+H6 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+BLOCKQUOTE {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+INPUT {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+SELECT {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+TEXTAREA {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+FORM {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+UL {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+OL {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+FONT {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+</STYLE>
+<!--stopindex-->
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY text=#000000 vLink=#660066 aLink=#ff0000 link=#0000ff bgColor=#ffffff><!--========================--><!--===== JAVA SCRIPT ======--><!--========================-->
+<SCRIPT language=JavaScript>
+<!--
+function printpage() {
+        self.location = "/servlet/PrintPageServlet?url=" + escape(document.URL);
+}
+// -->
+</SCRIPT>
+
+<SCRIPT language=JavaScript type=text/javascript>
+
+<!--
+function gotoFunction() {
+        self.location = 
+document.productGoto.url.options[document.productGoto.url.selectedIndex].value;
+}
+function goFunction() {
+        self.location = 
+document.productGo.url.options[document.productGo.url.selectedIndex].value;
+}
+// -->
+
+</SCRIPT>
+<!--========================--><!--=== END JAVA SCRIPT ====--><!--========================--><!-- End Body Insert--><!-- Start PageTop Insert -->
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR vAlign=top align=middle>
+    <TD align=left width=157><IMG height=40 alt="" 
+      src="Using Java Reflection_files/pixel.gif" width=40> <A 
+      href="http://java.sun.com/index.html"><IMG height=88 
+      alt="Java Technology Home Page" 
+      src="Using Java Reflection_files/javalogo52x88.gif" width=52 border=0></A> 
+      <BR><IMG height=1 alt="" src="Using Java Reflection_files/pixel.gif" 
+      width=157></TD>
+    <TD>
+      <FORM action=http://search.java.sun.com/search/java/ method=get>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD align=right><IMG height=14 alt="" 
+            src="Using Java Reflection_files/stripelt.gif" width=6></TD>
+          <TD width="100%">
+            <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+              <TBODY>
+              <TR>
+                <TD width="100%" bgColor=#cc9966><IMG height=2 alt="" 
+                  src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+              <TR>
+                <TD><IMG height=2 alt="" 
+                  src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+              <TR>
+                <TD bgColor=#cc9966><IMG height=2 alt="" 
+                  src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+              <TR>
+                <TD><IMG height=2 alt="" 
+                  src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+              <TR>
+                <TD bgColor=#cc9966><IMG height=2 alt="" 
+                  src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+              <TR>
+                <TD><IMG height=2 alt="" 
+                  src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+              <TR>
+                <TD bgColor=#cc9966><IMG height=2 alt="" 
+                  src="Using Java Reflection_files/pixel.gif" 
+              width=1></TD></TR></TBODY></TABLE></TD>
+          <TD align=left><IMG height=14 alt="" 
+            src="Using Java Reflection_files/stripert.gif" width=6></TD>
+          <TD>
+            <TABLE cellSpacing=0 cellPadding=0 border=0>
+              <TBODY>
+              <TR>
+                <TD vAlign=center width=110><A 
+                  href="http://servlet.java.sun.com/help/"><IMG height=11 
+                  alt="Help Pages" src="Using Java Reflection_files/help.gif" 
+                  width=38 border=0></A><A href="http://java.sun.com/a-z/"><IMG 
+                  height=11 alt="A-Z Index" 
+                  src="Using Java Reflection_files/azindex.gif" width=72 
+                  border=0></A></TD>
+                <TD vAlign=center><FONT size=1><INPUT maxLength=128 size=15 
+                  name=qt></FONT></TD>
+                <TD vAlign=center width=55><INPUT type=image alt=Search 
+                  width=55 src="Using Java Reflection_files/search.button.gif" 
+                  value=search 
+      border=0></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></FORM>
+      <P>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR vAlign=top>
+          <TD width="100%"><IMG height=18 alt="" 
+            src="Using Java Reflection_files/chiclet.row.gif" width=55></TD>
+          <TD align=right width=152 rowSpan=4><A 
+            href="http://developer.java.sun.com/developer/index.html"><IMG 
+            height=42 alt="Java Developer Connection(SM)" 
+            src="Using Java Reflection_files/developer.connection.header.gif" 
+            width=319 border=0></A></TD></TR>
+        <TR vAlign=top>
+          <TD width="100%" bgColor=#ffffff height=1><IMG height=1 alt="" 
+            src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+        <TR vAlign=top>
+          <TD width="100%" bgColor=#cc9966 height=1><IMG height=1 alt="" 
+            src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+        <TR vAlign=top>
+          <TD><A 
+            href="http://developer.java.sun.com/developer/technicalArticles/"><IMG 
+            height=22 alt="Technical Articles" 
+            src="Using Java Reflection_files/technical-articles.gif" width=165 
+            border=0></A></TD></TR></TBODY></TABLE></P></TD></TR></TBODY></TABLE><!-- End PageTop Insert --><!-- Start NavBar Insert -->
+<TABLE cellSpacing=0 cellPadding=3 width=157 align=left bgColor=#ffffff 
+border=0><!-- tab categories -->
+  <TBODY>
+  <TR>
+    <TD><A href="http://java.sun.com/products/"><IMG height=15 
+      alt="Downloads, APIs, Documentation" 
+      src="Using Java Reflection_files/side.tab.products.gif" width=130 
+      border=0></A></TD></TR>
+  <TR>
+    <TD><A href="http://developer.java.sun.com/developer/"><IMG height=15 
+      alt="Java Developer Connection" 
+      src="Using Java Reflection_files/side.tab.developer.gif" width=130 
+      border=0></A></TD></TR>
+  <TR>
+    <TD><A href="http://developer.java.sun.com/developer/infodocs/"><IMG 
+      height=15 alt="Tutorials, Tech Articles, Training" 
+      src="Using Java Reflection_files/side.tab.docs.gif" width=130 
+    border=0></A></TD></TR>
+  <TR>
+    <TD><A href="http://developer.java.sun.com/developer/support/"><IMG 
+      height=15 alt="Online Support" 
+      src="Using Java Reflection_files/side.tab.support.gif" width=130 
+      border=0></A></TD></TR>
+  <TR>
+    <TD><A href="http://developer.java.sun.com/developer/community/"><IMG 
+      height=15 alt="Community Discussion" 
+      src="Using Java Reflection_files/side.tab.community.gif" width=130 
+      border=0></A></TD></TR>
+  <TR>
+    <TD><A href="http://java.sun.com/industry/"><IMG height=15 
+      alt="News &amp; Events from Everywhere" 
+      src="Using Java Reflection_files/side.tab.news.gif" width=130 
+    border=0></A></TD></TR>
+  <TR>
+    <TD><A href="http://java.sun.com/solutions"><IMG height=15 
+      alt="Products from Everywhere" 
+      src="Using Java Reflection_files/side.tab.solutions.gif" width=130 
+      border=0></A></TD></TR>
+  <TR>
+    <TD><A href="http://java.sun.com/casestudies"><IMG height=15 
+      alt="How Java Technology is Used Worldwide" 
+      src="Using Java Reflection_files/side.tab.case.gif" width=130 
+    border=0></A></TD></TR>
+  <TR>
+    <TD><!-- End NavBar Insert --><!-- START SUB-NAV --><!--========================--><!--========================--><!--=== Begin Categories ===--><!--========================--><!--========================-->
+  <TR>
+    <TD>
+      <TABLE cellPadding=0 width="100%" align=left border=0>
+        <TBODY>
+        <TR>
+          <TD align=left width="100%"><A 
+            onclick="javascript:printpage();return false;" 
+            href="http://developer.java.sun.com/servlet/PrintPageServlet"><IMG 
+            height=25 alt="Print Button" 
+            src="Using Java Reflection_files/printable.gif" width=156 
+            border=0></A>
+            <P><IMG height=7 alt="Members Only" 
+            src="Using Java Reflection_files/chiclet.gif" width=7> <FONT 
+            size=-1><B>Requires login</B></FONT><BR><BR><!--==========================--><!--====== EARLY ACCESS ======--><!--==========================--><FONT 
+            color=#993333 size=3><B>Early Access</B></FONT> <IMG height=7 
+            alt="Members Only" src="Using Java Reflection_files/chiclet.gif" 
+            width=7> </P></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/earlyAccess/"><B>Downloads</B></A><BR><BR></FONT></TD></TR><!--==========================--><!--===== BUG DATABASE =======--><!--==========================-->
+        <TR>
+          <TD><FONT color=#993333 size=3><B>Bug Database</B></FONT> <IMG 
+            height=7 alt="Members Only" 
+            src="Using Java Reflection_files/chiclet.gif" width=7><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://java.sun.com/cgi-bin/bugreport.cgi/"><B>Submit a 
+            Bug</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/bugParade/index.jshtml"><B>View 
+            Database</B></A></FONT><BR><BR></TD></TR><!--==========================--><!--====== NEWSLETTERS =======--><!--==========================-->
+        <TR>
+          <TD><FONT color=#993333 size=3><B>Newsletters</B></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/techDocs/Newsletters/"><B>Back 
+            Issues</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/subscription/"><B>Subscribe</B></A></FONT><BR><BR></TD></TR><!--==========================--><!--==== LEARNING CENTERS ====--><!--==========================-->
+        <TR>
+          <TD><FONT color=#993333 size=3><B>Learning 
+        Centers</B></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/technicalArticles/"><B>Articles</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/Books/"><B>Bookshelf</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/codesamples/"><B>Code 
+            Samples</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/onlineTraining/new2java/"><B>New 
+            to Java</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/qow/archive/"><B>Question 
+            of the Week</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/Quizzes/"><B>Quizzes</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/TechTips/"><B>Tech 
+            Tips</B></A></FONT><BR></TD></TR>
+        <TR>
+          <TD><FONT size=2><A style="COLOR: #666699; TEXT-DECORATION: none" 
+            href="http://developer.java.sun.com/developer/onlineTraining/"><B>Tutorials</B></A></FONT><BR><BR></TD></TR><!--==========================--><!--======== FORUMS ==========--><!--==========================-->
+        <TR>
+          <TD><FONT size=3><A style="COLOR: #993333; TEXT-DECORATION: none" 
+            href="http://forum.java.sun.com/"><B>Forums</B></A></FONT><BR><BR></TD></TR></TBODY></TABLE></TD></TR><!--=========================--><!--== TECHNOLOGY CENTERS ===--><!--=========================-->
+  <TR>
+    <TD><!--========================--><!--========================--><!--===== JAVA SCRIPT ======--><!--========================--><!--========================--><!--begin pop-down menus-->
+      <FORM class=mstmnu name=productGo action=/servlet/RedirectServlet 
+      method=post><FONT color=#993333 size=3><B>Technology Centers</B></FONT> 
+      <BR><FONT size=3><SELECT onblur="return options[0].selected=true" 
+      onchange=goFunction() name=url> <OPTION value=# selected>SELECT</OPTION> 
+        <OPTION value=/developer/products/java2cs/>- Community</OPTION> <OPTION 
+        value=/developer/products/java2cs/>Source Area</OPTION> <OPTION 
+        value=/developer/products/java2cs/></OPTION> <OPTION 
+        value=http://java.sun.com/j2ee/>- Enterprise</OPTION> <OPTION 
+        value=http://java.sun.com/j2ee/></OPTION> <OPTION 
+        value=/developer/products/jini/>- Jini Network</OPTION> <OPTION 
+        value=/developer/products/jini/>Technology</OPTION> <OPTION 
+        value=/developer/products/jini/></OPTION> <OPTION 
+        value=/developer/products/wireless/>- Wireless</OPTION> <OPTION 
+        value=/developer/products/wireless/></OPTION> <OPTION 
+        value=/developer/products/>- more . . .</OPTION> <OPTION 
+        value=/developer/products/></OPTION></SELECT> </FONT>
+      <DIV align=left><INPUT type=image alt=Go 
+      src="Using Java Reflection_files/my_go.gif" border=0> </DIV></FORM></TD></TR><!--========================--><!--========================--><!--=== End   Categories ===--><!--========================--><!--========================--><!-- END SUB-NAV --><!--startindex--><!-- ADDITIONAL SUB-NAV --></TBODY></TABLE>
+<TABLE cellSpacing=0 cellPadding=0 border=0>
+  <TBODY>
+  <TR>
+    <TD><!-- Template Version 2.0 --><!-- ================== --><!-- Start Main Content --><!-- ================== -->
+      <TABLE cellSpacing=0 cellPadding=0 border=0>
+        <TBODY>
+        <TR>
+          <TD><FONT face="Verdana, Arial, Helvetica, sans-serif">
+            <DIV align=right><FONT size=-1><A 
+            href="http://developer.java.sun.com/developer/technicalArticles/index.html">Articles 
+            Index</A></FONT> 
+            <H2 align=right>Using Java Reflection</H2>
+            <P><FONT size=-1><B>By Glen McCluskey</B></FONT><BR><I>(January 
+            1998) </I></P></DIV>
+            <P>Reflection is a feature in the Java<FONT 
+            size=-2><SUP>TM</SUP></FONT> programming language. It allows an 
+            executing Java program to examine or "introspect" upon itself, and 
+            manipulate internal properties of the program. For example, it's 
+            possible for a Java class to obtain the names of all its members and 
+            display them. 
+            <P>The ability to examine and manipulate a Java class from within 
+            itself may not sound like very much, but in other programming 
+            languages this feature simply doesn't exist. For example, there is 
+            no way in a Pascal, C, or C++ program to obtain information about 
+            the functions defined within that program. 
+            <P>One tangible use of reflection is in JavaBeans<FONT 
+            size=-2><SUP>TM</SUP></FONT>, where software components can be 
+            manipulated visually via a builder tool. The tool uses reflection to 
+            obtain the properties of Java components (classes) as they are 
+            dynamically loaded. 
+            <P>
+            <H3>A Simple Example</H3>
+            <P>
+            <P>To see how reflection works, consider this simple example: <PRE>   import java.lang.reflect.*;
+ 
+   public class DumpMethods {
+      public static void main(String args[])
+      {
+         try {
+            Class c = Class.forName(args[0]);
+            Method m[] = c.getDeclaredMethods();
+            for (int i = 0; i &lt; m.length; i++)
+            System.out.println(m[i].toString());
+         }
+         catch (Throwable e) {
+            System.err.println(e);
+         }
+      }
+   }
+</PRE>For an invocation of: <PRE>  java DumpMethods java.util.Stack
+</PRE>the output is: <PRE>  public java.lang.Object java.util.Stack.push(
+    java.lang.Object)
+   public synchronized 
+     java.lang.Object java.util.Stack.pop()
+   public synchronized
+      java.lang.Object java.util.Stack.peek()
+   public boolean java.util.Stack.empty()
+   public synchronized 
+     int java.util.Stack.search(java.lang.Object)
+</PRE>That is, the method names of class 
+            <CODE>java.util.Stack</CODE> are listed, along with their fully 
+            qualified parameter and return types. 
+            <P>This program loads the specified class using 
+            <CODE>class.forName</CODE>, and then calls 
+            <CODE>getDeclaredMethods</CODE> to retrieve the list of methods 
+            defined in the class. <CODE>java.lang.reflect.Method</CODE> is a 
+            class representing a single class method. 
+            <P>
+            <H3>Setting Up to Use Reflection</H3>
+            <P>
+            <P>The reflection classes, such as <CODE>Method</CODE>, are found in 
+            java.lang.reflect. There are three steps that must be followed to 
+            use these classes. The first step is to obtain a 
+            <CODE>java.lang.Class</CODE> object for the class that you want to 
+            manipulate. <CODE>java.lang.Class</CODE> is used to represent 
+            classes and interfaces in a running Java program. 
+            <P>One way of obtaining a Class object is to say: <PRE>   Class c = Class.forName("java.lang.String");
+</PRE>to get the Class object for <CODE>String</CODE>. Another 
+            approach is to use: <PRE>   Class c = int.class;
+</PRE>or <PRE>  Class c = Integer.TYPE;
+</PRE>to obtain Class information on fundamental types. The latter 
+            approach accesses the predefined <CODE>TYPE</CODE> field of the 
+            wrapper (such as <CODE>Integer</CODE>) for the fundamental type. 
+            <P>The second step is to call a method such as 
+            <CODE>getDeclaredMethods</CODE>, to get a list of all the methods 
+            declared by the class. 
+            <P>Once this information is in hand, then the third step is to use 
+            the reflection API to manipulate the information. For example, the 
+            sequence: <PRE>   Class c = Class.forName("java.lang.String");
+   Method m[] = c.getDeclaredMethods();
+   System.out.println(m[0].toString());
+</PRE>will display a textual representation of the first method 
+            declared in <CODE>String</CODE>. 
+            <P>In the examples below, the three steps are combined to present 
+            self contained illustrations of how to tackle specific applications 
+            using reflection. 
+            <P>
+            <H3>Simulating the <CODE>instanceof</CODE> Operator</H3>
+            <P>
+            <P>Once Class information is in hand, often the next step is to ask 
+            basic questions about the Class object. For example, the 
+            <CODE>Class.isInstance</CODE> method can be used to simulate the 
+            <CODE>instanceof</CODE> operator: <A name=1></A><PRE>   class A {}
+
+   public class instance1 {
+      public static void main(String args[])
+      {
+         try {
+            Class cls = Class.forName("A");
+            boolean b1 
+              = cls.isInstance(new Integer(37));
+            System.out.println(b1);
+            boolean b2 = cls.isInstance(new A());
+            System.out.println(b2);
+         }
+         catch (Throwable e) {
+            System.err.println(e);
+         }
+      }
+   }
+</PRE>In this example, a Class object for <CODE>A</CODE> is created, 
+            and then class instance objects are checked to see whether they are 
+            instances of <CODE>A</CODE>. <CODE>Integer(37)</CODE> is not, but 
+            <CODE>new A()</CODE> is. 
+            <P>
+            <H3>Finding Out About Methods of a Class</H3>
+            <P>
+            <P>One of the most valuable and basic uses of reflection is to find 
+            out what methods are defined within a class. To do this the 
+            following code can be used: <A name=2></A><PRE>
+   import java.lang.reflect.*;
+
+   public class method1 {
+      private int f1(
+       Object p, int x) throws NullPointerException
+      {
+         if (p == null)
+            throw new NullPointerException();
+         return x;
+      }
+        
+      public static void main(String args[])
+      {
+         try {
+           Class cls = Class.forName("method1");
+        
+            Method methlist[] 
+              = cls.getDeclaredMethods();
+            for (int i = 0; i &lt; methlist.length;
+               i++) {  
+               Method m = methlist[i];
+               System.out.println("name 
+                 = " + m.getName());
+               System.out.println("decl class = " +
+                              m.getDeclaringClass());
+               Class pvec[] = m.getParameterTypes();
+               for (int j = 0; j &lt; pvec.length; j++)
+                  System.out.println("
+                   param #" + j + " " + pvec[j]);
+               Class evec[] = m.getExceptionTypes();
+               for (int j = 0; j &lt; evec.length; j++)
+                  System.out.println("exc #" + j 
+                    + " " + evec[j]);
+               System.out.println("return type = " +
+                                  m.getReturnType());
+               System.out.println("-----");
+            }
+         }
+         catch (Throwable e) {
+            System.err.println(e);
+         }
+      }
+   }
+</PRE>The program first gets the Class description for method1, and 
+            then calls <CODE>getDeclaredMethods</CODE> to retrieve a list of 
+            <CODE>Method</CODE> objects, one for each method defined in the 
+            class. These include public, protected, package, and private 
+            methods. If you use <CODE>getMethods</CODE> in the program instead 
+            of <CODE>getDeclaredMethods</CODE>, you can also obtain information 
+            for inherited methods. 
+            <P>Once a list of the <CODE>Method</CODE> objects has been obtained, 
+            it's simply a matter of displaying the information on parameter 
+            types, exception types, and the return type for each method. Each of 
+            these types, whether they are fundamental or class types, is in turn 
+            represented by a Class descriptor. 
+            <P>The output of the program is: <PRE>  name = f1
+   decl class = class method1
+   param #0 class java.lang.Object
+   param #1 int
+   exc #0 class java.lang.NullPointerException
+   return type = int
+   -----
+   name = main
+   decl class = class method1
+   param #0 class [Ljava.lang.String;
+   return type = void
+   -----
+</PRE>
+            <H3>Obtaining Information About Constructors</H3>
+            <P>
+            <P>A similar approach is used to find out about the constructors of 
+            a class. For example: <A name=3></A><PRE> import java.lang.reflect.*;
+        
+   public class constructor1 {
+      public constructor1()
+      {
+      }
+        
+      protected constructor1(int i, double d)
+      {
+      }
+        
+      public static void main(String args[])
+      {
+         try {
+           Class cls = Class.forName("constructor1");
+        
+           Constructor ctorlist[]
+               = cls.getDeclaredConstructors();
+         for (int i = 0; i &lt; ctorlist.length; i++) {
+               Constructor ct = ctorlist[i];
+               System.out.println("name 
+                 = " + ct.getName());
+               System.out.println("decl class = " +
+                            ct.getDeclaringClass());
+               Class pvec[] = ct.getParameterTypes();
+               for (int j = 0; j &lt; pvec.length; j++)
+                  System.out.println("param #" 
+                     + j + " " + pvec[j]);
+               Class evec[] = ct.getExceptionTypes();
+               for (int j = 0; j &lt; evec.length; j++)
+                  System.out.println(
+                    "exc #" + j + " " + evec[j]);
+               System.out.println("-----");
+            }
+          }
+          catch (Throwable e) {
+             System.err.println(e);
+          }
+      }
+   }
+</PRE>There is no return-type information retrieved in this example, 
+            because constructors don't really have a true return type. 
+            <P>When this program is run, the output is: <PRE>   name = constructor1
+   decl class = class constructor1
+   -----
+   name = constructor1
+   decl class = class constructor1
+   param #0 int
+   param #1 double
+   -----
+</PRE>
+            <H3>Finding Out About Class Fields</H3>
+            <P>
+            <P>It's also possible to find out which data fields are defined in a 
+            class. To do this, the following code can be used: <A name=4></A><PRE>
+   import java.lang.reflect.*;
+        
+   public class field1 {
+      private double d;
+      public static final int i = 37;
+      String s = "testing";
+        
+      public static void main(String args[])
+      {
+         try {
+            Class cls = Class.forName("field1");
+        
+            Field fieldlist[] 
+              = cls.getDeclaredFields();
+            for (int i 
+              = 0; i &lt; fieldlist.length; i++) {
+               Field fld = fieldlist[i];
+               System.out.println("name
+                  = " + fld.getName());
+               System.out.println("decl class = " +
+                           fld.getDeclaringClass());
+               System.out.println("type
+                  = " + fld.getType());
+               int mod = fld.getModifiers();
+               System.out.println("modifiers = " +
+                          Modifier.toString(mod));
+               System.out.println("-----");
+            }
+          }
+          catch (Throwable e) {
+             System.err.println(e);
+          }
+       }
+   }
+</PRE>This example is similar to the previous ones. One new feature 
+            is the use of <CODE>Modifier</CODE>. This is a reflection class that 
+            represents the modifiers found on a field member, for example 
+            "<CODE>private int</CODE>". The modifiers themselves are represented 
+            by an integer, and <CODE>Modifier.toString</CODE> is used to return 
+            a string representation in the "official" declaration order (such as 
+            "<CODE>static</CODE>" before "<CODE>final</CODE>"). The output of 
+            the program is: <PRE>  name = d
+   decl class = class field1
+   type = double
+   modifiers = private
+   -----
+   name = i
+   decl class = class field1
+   type = int
+   modifiers = public static final
+   -----
+   name = s
+   decl class = class field1
+   type = class java.lang.String
+   modifiers =
+   ----- 
+</PRE>As with methods, it's possible to obtain information about 
+            just the fields declared in a class 
+            (<CODE>getDeclaredFields</CODE>), or to also get information about 
+            fields defined in superclasses (<CODE>getFields</CODE>). 
+            <P>
+            <H3>Invoking Methods by Name</H3>
+            <P>
+            <P>So far the examples that have been presented all relate to 
+            obtaining class information. But it's also possible to use 
+            reflection in other ways, for example to invoke a method of a 
+            specified name. 
+            <P>To see how this works, consider the following example: <A 
+            name=5></A><PRE>   import java.lang.reflect.*;
+        
+   public class method2 {
+      public int add(int a, int b)
+      {
+         return a + b;
+      }
+        
+      public static void main(String args[])
+      {
+         try {
+           Class cls = Class.forName("method2");
+           Class partypes[] = new Class[2];
+            partypes[0] = Integer.TYPE;
+            partypes[1] = Integer.TYPE;
+            Method meth = cls.getMethod(
+              "add", partypes);
+            method2 methobj = new method2();
+            Object arglist[] = new Object[2];
+            arglist[0] = new Integer(37);
+            arglist[1] = new Integer(47);
+            Object retobj 
+              = meth.invoke(methobj, arglist);
+            Integer retval = (Integer)retobj;
+            System.out.println(retval.intValue());
+         }
+         catch (Throwable e) {
+            System.err.println(e);
+         }
+      }
+   }
+</PRE>Suppose that a program wants to invoke the <CODE>add</CODE> 
+            method, but doesn't know this until execution time. That is, the 
+            name of the method is specified during execution (this might be done 
+            by a JavaBeans development environment, for example). The above 
+            program shows a way of doing this. 
+            <P><CODE>getMethod</CODE> is used to find a method in the class that 
+            has two integer parameter types and that has the appropriate name. 
+            Once this method has been found and captured into a 
+            <CODE>Method</CODE> object, it is invoked upon an object instance of 
+            the appropriate type. To invoke a method, a parameter list must be 
+            constructed, with the fundamental integer values 37 and 47 wrapped 
+            in <CODE>Integer</CODE> objects. The return value (84) is also 
+            wrapped in an <CODE>Integer</CODE> object. 
+            <P>
+            <H3>Creating New Objects</H3>
+            <P>
+            <P>There is no equivalent to method invocation for constructors, 
+            because invoking a constructor is equivalent to creating a new 
+            object (to be the most precise, creating a new object involves both 
+            memory allocation and object construction). So the nearest 
+            equivalent to the previous example is to say: <A name=6></A><PRE>   import java.lang.reflect.*;
+        
+   public class constructor2 {
+      public constructor2()
+      {
+      }
+        
+      public constructor2(int a, int b)
+      {
+         System.out.println(
+           "a = " + a + " b = " + b);
+      }
+        
+      public static void main(String args[])
+      {
+         try {
+           Class cls = Class.forName("constructor2");
+           Class partypes[] = new Class[2];
+            partypes[0] = Integer.TYPE;
+            partypes[1] = Integer.TYPE;
+            Constructor ct 
+              = cls.getConstructor(partypes);
+            Object arglist[] = new Object[2];
+            arglist[0] = new Integer(37);
+            arglist[1] = new Integer(47);
+            Object retobj = ct.newInstance(arglist);
+         }
+         catch (Throwable e) {
+            System.err.println(e);
+         }
+      }
+   }
+</PRE>which finds a constructor that handles the specified parameter 
+            types and invokes it, to create a new instance of the object. The 
+            value of this approach is that it's purely dynamic, with constructor 
+            lookup and invocation at execution time, rather than at compilation 
+            time. 
+            <P>
+            <H3>Changing Values of Fields</H3>
+            <P>
+            <P>Another use of reflection is to change the values of data fields 
+            in objects. The value of this is again derived from the dynamic 
+            nature of reflection, where a field can be looked up by name in an 
+            executing program and then have its value changed. This is 
+            illustrated by the following example: <A name=7></A><PRE>   import java.lang.reflect.*;
+        
+   public class field2 {
+      public double d;
+        
+      public static void main(String args[])
+      {
+         try {
+            Class cls = Class.forName("field2");
+            Field fld = cls.getField("d");
+            field2 f2obj = new field2();
+            System.out.println("d = " + f2obj.d);
+            fld.setDouble(f2obj, 12.34);
+            System.out.println("d = " + f2obj.d);
+         }
+         catch (Throwable e) {
+            System.err.println(e);
+         }
+      }
+   }
+</PRE>In this example, the d field has its value set to 12.34. 
+            <P>
+            <H3>Using Arrays</H3>
+            <P>
+            <P>One final use of reflection is in creating and manipulating 
+            arrays. Arrays in the Java language are a specialized type of class, 
+            and an array reference can be assigned to an <CODE>Object</CODE> 
+            reference. 
+            <P>To see how arrays work, consider the following example: <PRE>   import java.lang.reflect.*;
+        
+   public class array1 {
+      public static void main(String args[])
+      {
+         try {
+            Class cls = Class.forName(
+              "java.lang.String");
+            Object arr = Array.newInstance(cls, 10);
+            Array.set(arr, 5, "this is a test");
+            String s = (String)Array.get(arr, 5);
+            System.out.println(s);
+         }
+         catch (Throwable e) {
+            System.err.println(e);
+         }
+      }
+   }
+</PRE>This example creates a 10-long array of Strings, and then sets 
+            location 5 in the array to a string value. The value is retrieved 
+            and displayed. 
+            <P>A more complex manipulation of arrays is illustrated by the 
+            following code: <A name=8></A><PRE>   import java.lang.reflect.*;
+        
+   public class array2 {
+      public static void main(String args[])
+      {
+         int dims[] = new int[]{5, 10, 15};
+         Object arr 
+           = Array.newInstance(Integer.TYPE, dims);
+        
+         Object arrobj = Array.get(arr, 3);
+         Class cls = 
+           arrobj.getClass().getComponentType();
+         System.out.println(cls);
+         arrobj = Array.get(arrobj, 5);
+         Array.setInt(arrobj, 10, 37);
+        
+         int arrcast[][][] = (int[][][])arr;
+         System.out.println(arrcast[3][5][10]);
+      }
+   }
+</PRE>This example creates a 5 x 10 x 15 array of ints, and then 
+            proceeds to set location [3][5][10] in the array to the value 37. 
+            Note here that a multi-dimensional array is actually an array of 
+            arrays, so that, for example, after the first Array.get, the result 
+            in arrobj is a 10 x 15 array. This is peeled back once again to 
+            obtain a 15-long array, and the 10th slot in that array is set using 
+            <CODE>Array.setInt</CODE>. 
+            <P>Note that the type of array that is created is dynamic, and does 
+            not have to be known at compile time. 
+            <P>
+            <H3>Summary</H3>
+            <P>
+            <P>Java reflection is useful because it supports dynamic retrieval 
+            of information about classes and data structures by name, and allows 
+            for their manipulation within an executing Java program. This 
+            feature is extremely powerful and has no equivalent in other 
+            conventional languages such as C, C++, Fortran, or Pascal. <IMG 
+            height=10 alt="Coffecup Logo" 
+            src="Using Java Reflection_files/coffeecup13x10.gif" width=13> 
+            <P><EM>Glen McCluskey has focused on programming languages since 
+            1988. He consults in the areas of Java and C++ performance, testing, 
+            and technical documentation.</EM> 
+            <P>
+            <HR>
+
+            <H3>Reader Feedback</H3>
+            <P>Tell us what you think of this article. 
+            <P><IMG height=63 alt=Duke src="Using Java Reflection_files/T7.gif" 
+            width=85 align=left border=0> 
+            <FORM action=/servlet/jdc.survey.TabulationServlet 
+            method=post><INPUT type=hidden value=2600 name=survey_id> <INPUT 
+            type=hidden value=True name=anonymous> <INPUT type=hidden value=3 
+            name=answer_count> <INPUT type=hidden value=Reflection 
+            name=answer1>&nbsp; <INPUT type=radio value=2 name=answer2>&nbsp; 
+            Very worth reading <INPUT type=radio value=1 name=answer2>&nbsp; 
+            Worth reading <INPUT type=radio value=0 name=answer2>&nbsp; Not 
+            worth reading 
+            <P>If you have other comments or ideas for future articles, please 
+            type them here: 
+            <P><TEXTAREA name=answer3 cols=50></TEXTAREA> 
+            <P><INPUT type=submit value=Submit> <INPUT type=reset value=Reset> 
+            </FORM></FONT></P></TD></TR></TBODY></TABLE><!-- ================ --><!-- End Main Content --><!-- ================ --></TD></TR></TBODY></TABLE><!--stopindex--><!-- Copyright Insert --><BR 
+clear=all>
+<FORM action=/cgi-bin/search.cgi method=post>
+<TABLE cellSpacing=5 cellPadding=0 width="100%" border=0>
+  <TBODY>
+  <TR>
+    <TD vAlign=bottom><A onclick="javascript:printpage();return false;" 
+      href="http://developer.java.sun.com/servlet/PrintPageServlet"><IMG 
+      height=25 alt="Print Button" 
+      src="Using Java Reflection_files/printbutton.gif" width=155 border=0></A> 
+      <CENTER><FONT color=#999999 size=-1>[ This page was updated: <!-- new date -->3-Jun-2002 ] </FONT></CENTER></TD></TR>
+  <TR>
+    <TD bgColor=#cccccc><IMG height=1 alt="" 
+      src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+  <TR>
+    <TD>
+      <CENTER><FONT size=-2><A href="http://java.sun.com/products/">Products 
+      &amp; APIs</A> | <A 
+      href="http://developer.java.sun.com/developer/index.html">Developer 
+      Connection</A> | <A 
+      href="http://developer.java.sun.com/developer/infodocs/">Docs &amp; 
+      Training</A> | <A 
+      href="http://developer.java.sun.com/developer/support/index.html">Online 
+      Support</A><BR><A 
+      href="http://developer.java.sun.com/developer/community/index.html">Community 
+      Discussion</A> | <A href="http://java.sun.com/industry/">Industry News</A> 
+      | <A href="http://java.sun.com/solutions">Solutions Marketplace</A> | <A 
+      href="http://java.sun.com/casestudies">Case Studies</A> 
+  </FONT></CENTER></TD></TR>
+  <TR>
+    <TD bgColor=#cccccc><IMG height=1 alt="" 
+      src="Using Java Reflection_files/pixel.gif" width=1></TD></TR><!-- BEGIN DEVELOPER SITES CROSS LINKS -->
+  <TR>
+    <TD align=middle>
+      <TABLE cellSpacing=0 cellPadding=0 width=535 align=center border=0>
+        <TBODY>
+        <TR>
+          <TD align=right width=110>
+            <DIV style="FONT-SIZE: 10pt">Developer Sites:</DIV></TD>
+          <TD width=425><IMG height=21 alt="" 
+            src="Using Java Reflection_files/dev_sites_map.gif" width=405 
+            useMap=#dev_sites border=0></TD></TR></TBODY></TABLE></TD></TR><!-- END DEVELOPER SITES CROSS LINKS -->
+  <TR>
+    <TD bgColor=#cccccc><IMG height=1 alt="" 
+      src="Using Java Reflection_files/pixel.gif" width=1></TD></TR>
+  <TR>
+    <TD>
+      <CENTER><FONT size=-2><A 
+      href="http://java.sun.com/docs/glossary.html">Glossary</A> | <A 
+      href="http://servlet.java.sun.com/help/">Help Pages</A> 
+  </FONT></CENTER></TD></TR>
+  <TR>
+    <TD>
+      <TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+        <TBODY>
+        <TR>
+          <TD width="50%"><FONT size=-2>For answers to common questions and 
+            further contact<BR>information please see the java.sun.com <A 
+            href="http://servlet.java.sun.com/help/">Help Pages</A>. 
+            <BR><BR>Unless otherwise licensed, code in all technical materials 
+            herein <BR>(including articles, FAQs, samples) is provided under 
+            this <A 
+            href="http://developer.java.sun.com/berkeley_license.html">License</A>. 
+            <BR></FONT></TD>
+          <TD align=right width="50%"><A href="http://www.sun.com/"><IMG 
+            height=30 alt="Sun Microsystems, Inc." 
+            src="Using Java Reflection_files/lgsun.gif" width=64 
+            border=0></A><BR><FONT size=-2>Copyright &copy; 1995-2002 <A 
+            href="http://www.sun.com/">Sun Microsystems, Inc.</A><BR>All Rights 
+            Reserved. <A 
+            href="http://www.sun.com/share/text/termsofuse.html">Terms of 
+            Use</A>. <A 
+            href="http://www.sun.com/privacy/">Privacy&nbsp;Policy</A>. 
+          </FONT></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></FORM><MAP 
+name=dev_sites><AREA title="Dot-Com Builder" shape=RECT target=_blank 
+  alt="Dot-Com Builder" coords=4,3,81,19 
+  href="http://servlet.java.sun.com/logRedirect/JDC-frontpage/http://dcb.sun.com"><AREA 
+  title=iPlanet shape=RECT target=_blank alt=iPlanet coords=83,3,124,19 
+  href="http://servlet.java.sun.com/logRedirect/JDC-frontpage/http://developer.iplanet.com"><AREA 
+  title=Java.Sun.Com shape=RECT target=_blank alt=Java.Sun.Com 
+  coords=126,3,156,19 
+  href="http://servlet.java.sun.com/logRedirect/JDC-frontpage/http://java.sun.com"><AREA 
+  title="Java Developer Connection" shape=RECT alt="Java Developer Connection" 
+  coords=158,3,188,19 
+  href="http://servlet.java.sun.com/logRedirect/JDC-frontpage/http://developer.java.sun.com"><AREA 
+  title="Solaris Developer Connection" shape=RECT target=_blank 
+  alt="Solaris Developer Connection" coords=190,3,232,19 
+  href="http://servlet.java.sun.com/logRedirect/JDC-frontpage/http://soldc.sun.com"><AREA 
+  title="Sun One Studio" shape=RECT target=_blank alt="Sun One Studio" 
+  coords=234,3,310,19 
+  href="http://servlet.java.sun.com/logRedirect/JDC-frontpage/http://forte.sun.com"><AREA 
+  title="Wireless Developer" shape=RECT target=_blank alt="Wireless Developer" 
+  coords=312,3,401,19 
+  href="http://servlet.java.sun.com/logRedirect/JDC-frontpage/http://wireless.java.sun.com"></MAP><!-- End Copyright Insert --></BODY></HTML>

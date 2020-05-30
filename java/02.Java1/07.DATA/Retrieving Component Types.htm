@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0075)http://java.sun.com/docs/books/tutorial/reflect/array/getComponentType.html -->
+<HTML><HEAD><TITLE>Retrieving Component Types</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/isArray.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Retrieving Component Types_files/PreviousArrow.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Retrieving Component Types_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/newInstance.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Retrieving Component Types_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Retrieving Component Types_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Working with Arrays </FONT>
+<H2>Retrieving Component Types </H2>
+<BLOCKQUOTE>The component type is the type of an array's elements. For 
+  example, the component type of the <CODE>arrowKeys</CODE> array in the 
+  following line of code is <CODE>Button</CODE>: 
+  <BLOCKQUOTE><PRE>Button[] arrowKeys = new Button[4];
+</PRE></BLOCKQUOTE>The component type of a multidimensional array is an array. 
+  In the next line of code, the component type of the array named 
+  <CODE>matrix</CODE> is <CODE>int[]</CODE>: 
+  <BLOCKQUOTE><PRE>int[][] matrix = new int[100][100];
+</PRE></BLOCKQUOTE>By invoking the <CODE>getComponentType</CODE> method 
+  against the <CODE>Class</CODE> object that represents an array, you can 
+  retrieve the component type of the array's elements. 
+  <P>The sample program that follows invokes the <CODE>getComponentType</CODE> 
+  method and prints out the class name of each array's component type. 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+import java.awt.*;
+
+class SampleComponent {
+
+   public static void main(String[] args) {
+      int[] ints = new int[2];
+      Button[]  buttons = new Button[6];
+      String[][] twoDim = new String[4][5];
+
+      printComponentType(ints);
+      printComponentType(buttons);
+      printComponentType(twoDim);
+   }
+
+   static void printComponentType(Object array) {
+      Class arrayClass = array.getClass();
+      String arrayName = arrayClass.getName();
+      Class componentClass = arrayClass.getComponentType();
+      String componentName = componentClass.getName();
+      System.out.println("Array: " + arrayName + 
+         ", Component: " + componentName);
+   }
+}
+
+</PRE></BLOCKQUOTE>The output of the sample program is: 
+  <BLOCKQUOTE><PRE>Array: [I, Component: int
+Array: [Ljava.awt.Button;, Component: java.awt.Button
+Array: [[Ljava.lang.String;, Component: [Ljava.lang.String;
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Retrieving Component Types_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/isArray.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Retrieving Component Types_files/PreviousArrow.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Retrieving Component Types_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/newInstance.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Retrieving Component Types_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

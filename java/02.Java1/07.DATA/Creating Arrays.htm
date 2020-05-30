@@ -1,0 +1,161 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0070)http://java.sun.com/docs/books/tutorial/reflect/array/newInstance.html -->
+<HTML><HEAD><TITLE>Creating Arrays</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/getComponentType.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Creating Arrays_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Creating Arrays_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/getset.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Creating Arrays_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Creating Arrays_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Working with Arrays </FONT>
+<H2>Creating Arrays </H2>
+<BLOCKQUOTE>If you are writing a development tool such as an application 
+  builder, you may want to allow the end user to create arrays at runtime. Your 
+  program can provide this capability by invoking the 
+  <CODE>Array.newInstance</CODE> method. 
+  <P>The following sample program uses the <CODE>newInstance</CODE> method to 
+  create a copy of an array that is twice the size of the original array. The 
+  <CODE>newInstance</CODE> method accepts as arguments the length and component 
+  type of the new array. The source code follows: 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+
+class SampleCreateArray {
+
+   public static void main(String[] args) {
+      int[] originalArray =  {55, 66};
+      int[] biggerArray = (int[]) doubleArray(originalArray);
+      System.out.println("originalArray:");
+      for (int k = 0; k &lt; Array.getLength(originalArray); k++)
+         System.out.println(originalArray[k]);
+      System.out.println("biggerArray:");
+      for (int k = 0; k &lt; Array.getLength(biggerArray); k++)
+         System.out.println(biggerArray[k]);
+   }
+
+   static Object doubleArray(Object source) {
+      int sourceLength = Array.getLength(source);
+      Class arrayClass = source.getClass();
+      Class componentClass = arrayClass.getComponentType();
+      Object result = Array.newInstance(componentClass,
+                                        sourceLength * 2);     
+      System.arraycopy(source, 0, result, 0, sourceLength);
+      return result;
+   }
+}
+
+</PRE></BLOCKQUOTE>The output of the preceding program is: 
+  <BLOCKQUOTE><PRE>originalArray:
+55
+66
+biggerArray:
+55
+66
+0
+0
+</PRE></BLOCKQUOTE>You can also use the <CODE>newInstance</CODE> method to 
+  create multidimensional arrays. In this case, the parameters of the method are 
+  the component type and an array of <CODE>int</CODE> types representing the 
+  dimensions of the new array. 
+  <P>The next sample program shows how to use <CODE>newInstance</CODE> to create 
+  multidimensional arrays: 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+
+class SampleMultiArray {
+
+   public static void main(String[] args) {
+
+      // The oneDimA and oneDimB objects are one 
+      // dimensional int arrays with 5 elements.
+
+      int[] dim1 = {5};
+      int[] oneDimA = (int[]) Array.newInstance(int.class, dim1);
+      int[] oneDimB = (int[]) Array.newInstance(int.class, 5);
+
+      // The twoDimStr object is a 5 X 10 array of String objects.
+
+      int[] dimStr = {5, 10};
+      String[][] twoDimStr = 
+                 (String[][]) Array.newInstance(String.class,dimStr);
+
+      // The twoDimA object is an array of 12 int arrays. The tail
+      // dimension is not defined. It is equivalent to the array 
+      // created as follows:
+      //    int[][] ints = new int[12][];
+
+      int[] dimA = {12};
+      int[][] twoDimA = (int[][]) Array.newInstance(int[].class, dimA);
+   }
+}
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Creating Arrays_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/getComponentType.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Creating Arrays_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Creating Arrays_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/getset.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Creating Arrays_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

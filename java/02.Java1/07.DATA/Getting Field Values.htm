@@ -1,0 +1,149 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0063)http://java.sun.com/docs/books/tutorial/reflect/object/get.html -->
+<HTML><HEAD><TITLE>Getting Field Values</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/arg.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Getting Field Values_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Getting Field Values_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/set.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Getting Field Values_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Getting Field Values_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Manipulating Objects </FONT>
+<H2>Getting Field Values </H2>
+<BLOCKQUOTE>If you are writing a development tool such as a debugger, you must 
+  be able to obtain field values. This is a three-step process: 
+  <OL>
+    <LI>Create a <CODE>Class</CODE> object. The section <A 
+    href="http://java.sun.com/docs/books/tutorial/reflect/class/getClass.html">Retrieving 
+    Class Objects</A> shows you how to do this. 
+    <LI>Create a <CODE>Field</CODE> object by invoking <CODE>getField</CODE> on 
+    the <CODE>Class</CODE> object. For more information, see the section <A 
+    href="http://java.sun.com/docs/books/tutorial/reflect/class/getFields.html">Identifying 
+    Class Fields</A>. 
+    <LI>Invoke one of the <CODE>get</CODE> methods on the <CODE>Field</CODE> 
+    object. </LI></OL>The <A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Field.html" 
+  target=apidoc><FONT color=#8800bb><CODE>Field</CODE> </FONT></A><A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Field.html" 
+  target=apidoc><IMG height=11 alt="(in the API reference documentation)" 
+  src="Getting Field Values_files/apiIcon.gif" width=11 align=absMiddle 
+  border=0></A>class has specialized methods for getting the values of primitive 
+  types. For example, the <CODE>getInt</CODE> method returns the contents as an 
+  <CODE>int</CODE> value, <CODE>getFloat</CODE> returns a <CODE>float</CODE>, 
+  and so forth. If the field stores an object instead of a primitive, then use 
+  the <CODE>get</CODE> method to retrieve the object. 
+  <P>The following sample program demonstrates the three steps listed 
+  previously. This program gets the value of the <CODE>height</CODE> field from 
+  a <CODE>Rectangle</CODE> object. Because the <CODE>height</CODE> is a 
+  primitive type (<CODE>int</CODE>), the object returned by the <CODE>get</CODE> 
+  method is a wrapper object (<CODE>Integer</CODE>). 
+  <P>In the sample program, the name of the <CODE>height</CODE> field is known 
+  at compile time. However, in a development tool such as a GUI builder, the 
+  field name might not be known until runtime. To find out what fields belong to 
+  a class, you can use the techniques described in the section <A 
+  href="http://java.sun.com/docs/books/tutorial/reflect/class/getFields.html">Identifying 
+  Class Fields</A>. 
+  <P>Here is the source code for the sample program: 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+import java.awt.*;
+
+class SampleGet {
+
+   public static void main(String[] args) {
+      Rectangle r = new Rectangle(100, 325);
+      printHeight(r);
+
+   }
+
+   static void printHeight(Rectangle r) {
+      Field heightField;
+      Integer heightValue;
+      Class c = r.getClass();
+      try {
+        heightField = c.getField("height");
+        heightValue = (Integer) heightField.get(r);
+        System.out.println("Height: " + heightValue.toString());
+      } catch (NoSuchFieldException e) {
+          System.out.println(e);
+      } catch (SecurityException e) {
+          System.out.println(e);
+      } catch (IllegalAccessException e) {
+          System.out.println(e);
+      }
+   }
+}
+</PRE></BLOCKQUOTE>The output of the sample program verifies the value of the 
+  <CODE>height</CODE> field: 
+  <BLOCKQUOTE><PRE>Height: 325
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Getting Field Values_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/arg.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Getting Field Values_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Getting Field Values_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/set.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Getting Field Values_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

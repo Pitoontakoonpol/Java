@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0063)http://java.sun.com/docs/books/tutorial/reflect/object/set.html -->
+<HTML><HEAD><TITLE>Setting Field Values</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/get.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Setting Field Values_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Setting Field Values_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/invoke.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Setting Field Values_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Setting Field Values_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Manipulating Objects </FONT>
+<H2>Setting Field Values </H2>
+<BLOCKQUOTE>Some debuggers allow users to change field values during a 
+  debugging session. If you are writing a tool that has this capability, you 
+  must call one of the <A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Field.html" 
+  target=apidoc><FONT color=#8800bb><CODE>Field</CODE> </FONT></A><A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Field.html" 
+  target=apidoc><IMG height=11 alt="(in the API reference documentation)" 
+  src="Setting Field Values_files/apiIcon.gif" width=11 align=absMiddle 
+  border=0></A>class's <CODE>set</CODE> methods. To modify the value of a field, 
+  perform the following steps: 
+  <OL>
+    <LI>Create a <CODE>Class</CODE> object. For more information, see the 
+    section <A 
+    href="http://java.sun.com/docs/books/tutorial/reflect/class/getClass.html">Retrieving 
+    Class Objects</A>. 
+    <LI>Create a <CODE>Field</CODE> object by invoking <CODE>getField</CODE> on 
+    the <CODE>Class</CODE> object. The section <A 
+    href="http://java.sun.com/docs/books/tutorial/reflect/class/getFields.html">Identifying 
+    Class Fields</A> shows you how. 
+    <LI>Invoke the appropriate <CODE>set</CODE> method on the <CODE>Field</CODE> 
+    object. </LI></OL>
+  <P>The <CODE>Field</CODE> class provides several <CODE>set</CODE> methods. 
+  Specialized methods, such as <CODE>setBoolean</CODE> and <CODE>setInt</CODE>, 
+  are for modifying primitive types. If the field you want to change is an 
+  object invoke the <CODE>set</CODE> method. You can call <CODE>set</CODE> to 
+  modify a primitive type, but you must use the appropriate wrapper object for 
+  the value parameter. 
+  <P>The sample program that follows modifies the <CODE>width</CODE> field of a 
+  <CODE>Rectangle</CODE> object by invoking the <CODE>set</CODE> method. Since 
+  the <CODE>width</CODE> is a primitive type, an <CODE>int</CODE>, the value 
+  passed by <CODE>set</CODE> is an <CODE>Integer</CODE>, which is an object 
+  wrapper. 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+import java.awt.*;
+
+class SampleSet {
+
+   public static void main(String[] args) {
+      Rectangle r = new Rectangle(100, 20);
+      System.out.println("original: " + r.toString());
+      modifyWidth(r, new Integer(300));
+      System.out.println("modified: " + r.toString());
+   }
+
+   static void modifyWidth(Rectangle r, Integer widthParam ) {
+      Field widthField;
+      Integer widthValue;
+      Class c = r.getClass();
+      try {
+        widthField = c.getField("width");
+        widthField.set(r, widthParam);
+      } catch (NoSuchFieldException e) {
+          System.out.println(e);
+      } catch (IllegalAccessException e) {
+          System.out.println(e);
+      }
+   }
+}
+</PRE></BLOCKQUOTE>The output of the sample program verifies that the 
+  <CODE>width</CODE> changed from 100 to 300: 
+  <BLOCKQUOTE><PRE>original: java.awt.Rectangle[x=0,y=0,width=100,height=20]
+modified: java.awt.Rectangle[x=0,y=0,width=300,height=20]
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Setting Field Values_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/get.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Setting Field Values_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Setting Field Values_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/invoke.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Setting Field Values_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

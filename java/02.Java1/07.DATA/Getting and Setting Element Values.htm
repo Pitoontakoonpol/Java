@@ -1,0 +1,126 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0065)http://java.sun.com/docs/books/tutorial/reflect/array/getset.html -->
+<HTML><HEAD><TITLE>Getting and Setting Element Values</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/newInstance.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Getting and Setting Element Values_files/PreviousArrow.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Getting and Setting Element Values_files/TOCIcon.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/summary/index.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Getting and Setting Element Values_files/NextArrow.gif" width=26 
+      align=center border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Getting and Setting Element Values_files/blueline.gif" width=550 
+align=bottom NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection 
+API <BR><B>Lesson</B>: Working with Arrays </FONT>
+<H2>Getting and Setting Element Values </H2>
+<BLOCKQUOTE>In most programs, to access array elements you merely use an 
+  assignment expression as follows: 
+  <BLOCKQUOTE><PRE>int[10] codes; 
+codes[3] = 22; 
+aValue = codes[3];
+</PRE></BLOCKQUOTE>This technique will not work if you don't know the name of 
+  the array until runtime. 
+  <P>Fortunately, you can use the <CODE>Array</CODE> class <CODE>set</CODE> and 
+  <CODE>get</CODE> methods to access array elements when the name of the array 
+  is unknown at compile time. In addition to <CODE>get</CODE> and 
+  <CODE>set</CODE>, the <CODE>Array</CODE> class has specialized methods that 
+  work with specific primitive types. For example, the value parameter of 
+  <CODE>setInt</CODE> is an <CODE>int</CODE>, and the object returned by 
+  <CODE>getBoolean</CODE> is a wrapper for a <CODE>boolean</CODE> type. 
+  <P>The sample program that follows uses the <CODE>set</CODE> and 
+  <CODE>get</CODE> methods to copy the contents of one array to another. 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+
+class SampleGetArray {
+
+   public static void main(String[] args) {
+      int[] sourceInts = {12, 78};
+      int[] destInts = new int[2];
+      copyArray(sourceInts, destInts);
+      String[] sourceStrgs = {"Hello ", "there ", "everybody"};
+      String[] destStrgs = new String[3];
+      copyArray(sourceStrgs, destStrgs);
+   }
+
+   public static void copyArray(Object source, Object dest) {
+      for (int i = 0; i &lt; Array.getLength(source); i++) {
+         Array.set(dest, i, Array.get(source, i));
+         System.out.println(Array.get(dest, i));
+      }
+   }
+}
+</PRE></BLOCKQUOTE>The output of the sample program is: 
+  <BLOCKQUOTE><PRE>12
+78
+Hello 
+there 
+everybody
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Getting and Setting Element Values_files/blueline.gif" width=550 
+align=bottom NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/newInstance.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Getting and Setting Element Values_files/PreviousArrow.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Getting and Setting Element Values_files/TOCIcon.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/summary/index.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Getting and Setting Element Values_files/NextArrow.gif" width=26 
+      align=center border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

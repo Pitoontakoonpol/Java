@@ -1,0 +1,147 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0066)http://java.sun.com/docs/books/tutorial/reflect/object/invoke.html -->
+<HTML><HEAD><TITLE>Invoking Methods</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/set.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Invoking Methods_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Invoking Methods_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Invoking Methods_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Invoking Methods_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Manipulating Objects </FONT>
+<H2>Invoking Methods </H2>
+<BLOCKQUOTE>Suppose that you are writing a debugger that allows the user to 
+  select and then invoke methods during a debugging session. Since you don't 
+  know at compile time which methods the user will invoke, you cannot hardcode 
+  the method name in your source code. Instead, you must follow these steps: 
+  <OL>
+    <LI>Create a <CODE>Class</CODE> object that corresponds to the object whose 
+    method you want to invoke. See the section <A 
+    href="http://java.sun.com/docs/books/tutorial/reflect/class/getClass.html">Retrieving 
+    Class Objects</A> for more information. 
+    <LI>Create a <A 
+    href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Method.html" 
+    target=apidoc><FONT color=#8800bb><CODE>Method</CODE> </FONT></A><A 
+    href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Method.html" 
+    target=apidoc><IMG height=11 alt="(in the API reference documentation)" 
+    src="Invoking Methods_files/apiIcon.gif" width=11 align=absMiddle 
+    border=0></A>object by invoking <CODE>getMethod</CODE> on the 
+    <CODE>Class</CODE> object. The <CODE>getMethod</CODE> method has two 
+    arguments: a <CODE>String</CODE> containing the method name, and an array of 
+    <CODE>Class</CODE> objects. Each element in the array corresponds to a 
+    parameter of the method you want to invoke. For more information on 
+    retrieving <CODE>Method</CODE> objects, see the section <A 
+    href="http://java.sun.com/docs/books/tutorial/reflect/class/getMethods.html">Obtaining 
+    Method Information</A> 
+    <LI>Invoke the method by calling <CODE>invoke</CODE>. The 
+    <CODE>invoke</CODE> method has two arguments: an array of argument values to 
+    be passed to the invoked method, and an object whose class declares or 
+    inherits the method. </LI></OL>
+  <P>The sample program that follows shows you how to invoke a method 
+  dynamically. The program retrieves the <CODE>Method</CODE> object for the 
+  <CODE>String.concat</CODE> method and then uses <CODE>invoke</CODE> to 
+  concatenate two <CODE>String</CODE> objects. 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+
+class SampleInvoke {
+
+   public static void main(String[] args) {
+      String firstWord = "Hello ";
+      String secondWord = "everybody.";
+      String bothWords = append(firstWord, secondWord);
+      System.out.println(bothWords);
+   }
+
+   public static String append(String firstWord, String secondWord) {
+      String result = null;
+      Class c = String.class;
+      Class[] parameterTypes = new Class[] {String.class};
+      Method concatMethod;
+      Object[] arguments = new Object[] {secondWord};
+      try {
+        concatMethod = c.getMethod("concat", parameterTypes);
+        result = (String) concatMethod.invoke(firstWord, arguments);
+      } catch (NoSuchMethodException e) {
+          System.out.println(e);
+      } catch (IllegalAccessException e) {
+          System.out.println(e);
+      } catch (InvocationTargetException e) {
+          System.out.println(e);
+      }
+      return result;
+   }
+}
+</PRE></BLOCKQUOTE>The output of the preceding program is: 
+  <BLOCKQUOTE><PRE>Hello everybody.
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Invoking Methods_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/set.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Invoking Methods_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Invoking Methods_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Invoking Methods_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

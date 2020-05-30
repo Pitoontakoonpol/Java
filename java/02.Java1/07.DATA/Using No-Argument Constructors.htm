@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0065)http://java.sun.com/docs/books/tutorial/reflect/object/noarg.html -->
+<HTML><HEAD><TITLE>Using No-Argument Constructors</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/create.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Using No-Argument Constructors_files/PreviousArrow.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Using No-Argument Constructors_files/TOCIcon.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/arg.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Using No-Argument Constructors_files/NextArrow.gif" width=26 
+      align=center border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Using No-Argument Constructors_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Manipulating Objects </FONT>
+<H2>Using No-Argument Constructors </H2>
+<BLOCKQUOTE>If you need to create an object with the no-argument constructor, 
+  you can invoke the <CODE>newInstance</CODE> method on a <A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.Class.html" 
+  target=apidoc><FONT color=#8800bb><CODE>Class</CODE> </FONT></A><A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.Class.html" 
+  target=apidoc><IMG height=11 alt="(in the API reference documentation)" 
+  src="Using No-Argument Constructors_files/apiIcon.gif" width=11 
+  align=absMiddle border=0></A>object. The <CODE>newInstance</CODE> method 
+  throws a <CODE>NoSuchMethodException</CODE> if the class does not have a 
+  no-argument constructor. For more information on working with <A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Constructor.html" 
+  target=apidoc><FONT color=#8800bb><CODE>Constructor</CODE> </FONT></A><A 
+  href="http://java.sun.com/products/jdk/1.2/docs/api/java.lang.reflect.Constructor.html" 
+  target=apidoc><IMG height=11 alt="(in the API reference documentation)" 
+  src="Using No-Argument Constructors_files/apiIcon.gif" width=11 
+  align=absMiddle border=0></A>objects, see the section <A 
+  href="http://java.sun.com/docs/books/tutorial/reflect/class/getConstructors.html">Discovering 
+  Class Constructors</A>. 
+  <P>The following sample program creates an instance of the 
+  <CODE>Rectangle</CODE> class using the no-argument constructor by calling the 
+  <CODE>newInstance</CODE> method: 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+import java.awt.*;
+
+class SampleNoArg {
+
+   public static void main(String[] args) {
+      Rectangle r = (Rectangle) createObject("java.awt.Rectangle");
+      System.out.println(r.toString());
+   }
+
+   static Object createObject(String className) {
+      Object object = null;
+      try {
+          Class classDefinition = Class.forName(className);
+          object = classDefinition.newInstance();
+      } catch (InstantiationException e) {
+          System.out.println(e);
+      } catch (IllegalAccessException e) {
+          System.out.println(e);
+      } catch (ClassNotFoundException e) {
+          System.out.println(e);
+      }
+      return object;
+   }
+}
+</PRE></BLOCKQUOTE>The output of the preceding program is: 
+  <BLOCKQUOTE><PRE>java.awt.Rectangle[x=0,y=0,width=0,height=0]
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Using No-Argument Constructors_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/create.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Using No-Argument Constructors_files/PreviousArrow.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#object" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Using No-Argument Constructors_files/TOCIcon.gif" width=26 
+      align=center border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/arg.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Using No-Argument Constructors_files/NextArrow.gif" width=26 
+      align=center border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/object/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>

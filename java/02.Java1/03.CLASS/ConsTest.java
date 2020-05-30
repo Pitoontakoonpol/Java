@@ -1,0 +1,32 @@
+class Circle {
+    private double radius = 1;
+    public Circle() 
+    {
+        this(2);
+        System.out.println("Circle()");
+    }
+
+    public Circle(double radius) 
+    {
+        this.radius = radius;
+        System.out.println("Circle(double)");
+    }
+
+    public void setRadius(double radius) 
+    {
+        this.radius = radius;
+    }
+
+    public double getArea() 
+    {
+        return Math.PI * radius * radius;
+    }
+}
+
+class ConsTest 
+{
+    public static void main(String[] args) {
+        Circle circle1 = new Circle();
+        new Circle(3);
+    }
+}

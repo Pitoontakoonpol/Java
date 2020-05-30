@@ -1,0 +1,66 @@
+import java.util.*;
+
+class 2DPoint
+{
+  private int x,y;
+
+  2DPoint(int x, int y)
+  {
+    this.x = x;
+    this.y = y;
+  }
+
+  public int getX()
+  {
+    return x;
+  }
+  public int getY()
+  {
+    return y;
+  }
+
+  public String toString()
+  {
+    return ("2DPoint [ X: " + x + ", Y: " + y + " ]");
+  }
+}
+
+class 2DPointComparator implements Comparator
+{
+  public int compare(Object o1, Object o2)
+  {
+    2DPoint fred1 = (2DPoint)o1, fred2 = (2DPoint)o2;
+    if(fred1.getX() == fred2.getX())
+    {
+      return fred1.getY() - fred2.getY();
+    }
+    else
+    {
+      return fred1.getX() - fred2.getX();
+    }
+  }
+  public boolean equals(Object obj)
+  {
+    return obj.equals (this);
+  }
+}
+
+public class ComparatorTest
+{
+  public static void main(String[] args)
+  {
+    2DPoint[] freds = new 2DPoint[]
+    {
+      new 2DPoint(3,7),
+      new 2DPoint(4,2),
+      new 2DPoint(12,2),
+      new 2DPoint(3,3),
+      new 2DPoint(4,4)
+    };
+    Arrays.sort(freds,new 2DPointComparator());
+    for(int i = 0; i < freds.length; i++)
+    {
+      System.out.println(freds[i]);
+    }
+  }
+}

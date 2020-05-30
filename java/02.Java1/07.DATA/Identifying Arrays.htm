@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0066)http://java.sun.com/docs/books/tutorial/reflect/array/isArray.html -->
+<HTML><HEAD><TITLE>Identifying Arrays</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=ks_c_5601-1987">
+<SCRIPT language=JavaScript>
+<!-- hide
+function openWin(term) {
+  url="../../information/glossary.html#" + term;
+  myWin= window.open(url, "Glossary",
+              "width=400,height=150,scrollbars=yes,status=no,toolbar=no,menubar=no");
+  myWin.focus();
+}
+//-->
+</SCRIPT>
+
+<META content="MSHTML 6.00.2712.300" name=GENERATOR></HEAD>
+<BODY link=#000099 bgColor=#ffffff><B><FONT size=-1>The Java</FONT><SUP><FONT 
+size=-2>TM</FONT></SUP> <FONT size=-1>Tutorial</FONT></B> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Identifying Arrays_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Identifying Arrays_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/getComponentType.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Identifying Arrays_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE><IMG height=8 
+src="Identifying Arrays_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR><FONT size=-1><B>Trail</B>: The Reflection API 
+<BR><B>Lesson</B>: Working with Arrays </FONT>
+<H2>Identifying Arrays </H2>
+<BLOCKQUOTE>If you aren't certain that a particular object is an array, you 
+  can check it with the <CODE>Class.isArray</CODE> method. Let's take a look at 
+  an example. 
+  <P>The sample program that follows prints the names of the arrays that are 
+  encapsulated in an object. The program performs these steps: 
+  <OL>
+    <LI>It retrieves the <CODE>Class</CODE> object that represents the target 
+    object. 
+    <LI>It gets the <CODE>Field</CODE> objects for the <CODE>Class</CODE> object 
+    retrieved in step 1. 
+    <LI>For each <CODE>Field</CODE> object, the program gets a corresponding 
+    <CODE>Class</CODE> object by invoking the <CODE>getType</CODE> method. 
+    <LI>To verify that the <CODE>Class</CODE> object retrieved in the preceding 
+    step represents an array, the program invokes the <CODE>isArray</CODE> 
+    method. </LI></OL>
+  <P>Here's the source code for the sample program: 
+  <BLOCKQUOTE><PRE>import java.lang.reflect.*;
+import java.awt.*;
+
+class SampleArray {
+
+   public static void main(String[] args) {
+      KeyPad target = new KeyPad();
+      printArrayNames(target);
+   }
+
+   static void printArrayNames(Object target) {
+      Class targetClass = target.getClass();
+      Field[] publicFields = targetClass.getFields();
+      for (int i = 0; i &lt; publicFields.length; i++) {
+         String fieldName = publicFields[i].getName();
+         Class typeClass = publicFields[i].getType();
+         String fieldType = typeClass.getName();
+         if (typeClass.isArray()) {
+            System.out.println("Name: " + fieldName + 
+               ", Type: " + fieldType);
+         }
+      }
+   }
+}
+
+class KeyPad {
+
+   public boolean alive;
+   public Button power;
+   public Button[] letters; 
+   public int[] codes;
+   public TextField[] rows;
+   public boolean[] states;
+}
+</PRE></BLOCKQUOTE>The output of the sample program follows. Note that the 
+  left bracket indicates that the object is an array. For a detailed description 
+  of the type descriptors that <CODE>getName</CODE> returns, see section 4.3.1 
+  of <EM>The Java Virtual Machine Specification</EM>. 
+  <BLOCKQUOTE><PRE>Name: letters, Type: [Ljava.awt.Button;
+Name: codes, Type: [I
+Name: rows, Type: [Ljava.awt.TextField;
+Name: states, Type: [Z
+</PRE></BLOCKQUOTE></BLOCKQUOTE><IMG height=8 
+src="Identifying Arrays_files/blueline.gif" width=550 align=bottom 
+NATURALSIZEFLAG="3"> <BR>
+<TABLE width=550>
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=left><A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top><IMG height=26 alt="Previous Page" 
+      src="Identifying Arrays_files/PreviousArrow.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/TOC.html#array" 
+      target=_top><IMG height=26 alt="Lesson Contents" 
+      src="Identifying Arrays_files/TOCIcon.gif" width=26 align=center 
+      border=0></A> <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/getComponentType.html" 
+      target=_top><IMG height=26 alt="Next Page" 
+      src="Identifying Arrays_files/NextArrow.gif" width=26 align=center 
+      border=0></A></TD>
+    <TD vAlign=center align=middle><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/index.html" 
+      target=_top>Start of Tutorial</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/index.html" 
+      target=_top>Start of Trail</A> &gt; <A 
+      href="http://java.sun.com/docs/books/tutorial/reflect/array/index.html" 
+      target=_top>Start of Lesson</A> </FONT></TD>
+    <TD vAlign=center align=right><FONT size=-1><A 
+      href="http://java.sun.com/docs/books/tutorial/search.html" 
+      target=_top>Search</A> <BR><A 
+      href="http://java.sun.com/docs/books/tutorial/forms/sendusmail.html">Feedback 
+      Form</A> </FONT></TD></TR></TBODY></TABLE>
+<P><FONT size=-1><A 
+href="http://java.sun.com/docs/books/tutorial/information/copyright.html">Copyright</A> 
+1995-2002 Sun Microsystems, Inc. All rights reserved. </FONT></P></BODY></HTML>
